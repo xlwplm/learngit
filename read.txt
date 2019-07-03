@@ -1,5 +1,69 @@
-123456789
-Git is a distributed version control system.
-Git is free software.
+使用空目录来学习git，公司的项目必须保密，不能上传到git
 
-1111100000000
+mkdir learngit 创建文件夹
+cd learngit 定位到文件夹
+pwd 显示当前目录
+git init 变成git仓库repository
+ls -ah 查询隐藏目录
+git add file 添加文件到仓库（暂存区）
+git commit -m "commit message" 提交文件到仓库（暂存区）
+git status 查询工作区仓库当前状态
+git diff file 查询文件修改内容，仓库工作区和暂存区的区别
+git log 查询日志
+git log --pretty=oneline 查询简单日志（commit id 是SHA1计算得出的数字，十六进制）
+
+git reset --hard HEAD^ 回退到上个版本，HEAD表示当前版本，上一个版本是HEAD^，上上一个版本是HEAD^^，上100个版本HEAD~100
+cat file 查询文件
+git reset --hard 1094a 回退到特定版本，commit id前4位即可
+
+┌────┐
+│HEAD│
+└────┘
+   │
+   └──> ○ append GPL
+        │
+        ○ add distributed
+        │
+        ○ wrote a readme file
+		
+回退版本只是改版HEAD指向，所以非常快
+
+git reflog 查询历史git命令
+
+
+
+本地目录：工作区（Working Directory）
+版本库（Repository）包括：stage（或者叫index）的暂存区、分支（git自动创建master分支）
+
+提交修改：工作区 add > 暂存区 commit> 当前分支
+git add 把文件修改添加到暂存区
+git commit 把暂存区的所有内容提交到当前分支
+
+
+第二次修改不会提交：
+第一次修改 -> git add -> 第二次修改 -> git commit
+修改为，可提交：
+第一次修改 -> git add -> 第二次修改 -> git add -> git commit
+
+git checkout -- file 撤销工作区修改
+一种是file自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
+一种是file已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
+
+git reset HEAD file  把暂存区的修改撤销，重新放回工作区
+
+
+rm file 删除文件
+git rm file 删除文件，再commit修改
+
+
+远程仓库：注册GitHub账号
+第1步：创建SSH Key。在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有id_rsa和id_rsa.pub这两个文件，如果已经有了，可直接跳到下一步。如果没有，打开Shell（Windows下打开Git Bash），创建SSH Key：
+ssh-keygen -t rsa -C "邮箱"
+SSH Key的秘钥对，id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥
+第2步：登陆GitHub，打开“Account settings”，“SSH Keys”页面，点“Add SSH Key”，填上任意Title，在Key文本框里粘贴id_rsa.pub文件的内容
+
+
+GitHub创建一个Git仓库Create a new repo
+关联本地远程仓库：git remote add origin ...
+第一次推送到远程仓库：git push -u origin master    -u参数，推送内容和关联
+以后修改后推送到远程仓库：git push origin master
